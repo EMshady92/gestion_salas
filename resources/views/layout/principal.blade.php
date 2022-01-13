@@ -107,78 +107,8 @@
 
                     </div>
                 </li>
-
-
-                <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown"
-                        href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                        <!-- item-->
-                        <div class="dropdown-header noti-title">
-                            <h6 class="text-overflow text-white m-0">Bienvenido !</h6>
-                        </div>
-
-                        <!-- item-->
-
-
-                        <div class="dropdown-divider"></div>
-
-
-                        <a href="/miperfil" class="dropdown-item notify-item">
-                            <i class="mdi mdi-account-outline"></i>
-                            <span>Mi perfil</span>
-                        </a>
-
-
-
-                        <a href="/cambiar_contraseña" class="dropdown-item notify-item">
-                            <i class="mdi mdi-lock-outline"></i>
-                            <span>Cambiar contraseña</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="/notificaciones" class="dropdown-item notify-item">
-                            <i class="mdi mdi-bell-outline"></i>
-                            <span>Notificaciónes</span>
-                        </a>
-
-
-
-                        <!-- item-->
-                        <a href="/auth/logout" class="dropdown-item notify-item">
-                            <i class="mdi mdi-logout-variant"></i>
-                            <span>Cerrar sesión</span>
-                        </a>
-
-
-
-
-
-
-                    </div>
-                </li>
-
-
-
-
             </ul>
 
-            <!-- LOGO -->
-            <div class="logo-box">
-                <a href="/welcome" class="logo text-center logo-dark">
-                    <span class="logo-lg">
-                        <img src="../../img/LogoTJA.png" style="width: 90%;">
-                        <!-- <span class="logo-lg-text-dark">Uplon</span> -->
-                    </span>
-                    <span class="logo-sm">
-                        <!-- <span class="logo-lg-text-dark">U</span> -->
-                        <img src="" style="width: 80%;">
-                    </span>
-                </a>
-
-            </div>
 
             <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                 <li>

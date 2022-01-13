@@ -17,9 +17,5 @@ Route::get('/', function () {
     return view('layout.principal');
 });
 
-Route::get('/salas', function () {
-    return view('salas.index');
-});
-
 //listas
-Route::resource('listas', App\Http\Controllers\ListasController::class);
+Route::resource('salas', App\Http\Controllers\SalasController::class);

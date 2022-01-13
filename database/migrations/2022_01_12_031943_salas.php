@@ -16,8 +16,8 @@ class Salas extends Migration
         Schema::create('salas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->time('hora_inicio');
-            $table->time('hora_fin');
+            $table->time('hora_inicio')->nullable();
+            $table->time('hora_fin')->nullable();
             $table->string('estado');
             $table->timestamps();
         });

@@ -18,7 +18,7 @@
                     </ol>
                 </div>
                 <h4 class="page-title">Listado de salas</h4>
-                <a href="/avisos/create" class="button-list">
+                <a href="/salas/create" class="button-list">
                     <button type="button" class="btn btn-success waves-effect waves-light">
                         <span class="btn-label"><i class="mdi mdi-plus-box"></i>
                         </span>Registrar</button>
@@ -41,8 +41,8 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Hora inicio</th>
-                            <th>Hora fin</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                             <th>Estado</th>
                             <th>Fecha de registro</th>
                             <th>Ultima actualización</th>
@@ -51,7 +51,31 @@
 
 
                     <tbody>
+                        @foreach($salas as $sala)
+                        <tr>
+                            <td>{{$sala->name}}</td>
+                            <td> <a  href="{{ route('salas.edit',$sala->id)}}"
+                                class="btn waves-effect waves-light btn-primary" role="button"><i class="mdi mdi-account-edit-outline"></i></a>
+                            </td>
 
+                            @if($sala->estado == "ACTIVO")
+                            <td>   <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                            <a class="btn waves-effect waves-light btn-warning" onclick=inactivar('{{$sala->id}}','salas');
+                                     style="margin-right: 10px;" role="button"><i
+                                        class="mdi mdi-delete"></i></a>
+                            </td>
+                            <td><span class="badge badge-success">{{$sala->estado}}</span></td>
+                            @else
+                            <td>No aplica</td>
+                            <td><span class="badge badge-danger">{{$sala->estado}}</span></td>
+                            @endif
+
+                            <td>{{$sala->created_at}}</td>
+                            <td>{{$sala->updated_at}}</td>
+
+
+                        </tr>
+                        @endforeach
 
                     </tbody>
                 </table>

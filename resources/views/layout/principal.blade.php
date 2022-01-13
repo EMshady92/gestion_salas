@@ -151,6 +151,10 @@
                                 <li><a href="/salas">Salas</a></li>
 
                             </ul>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="/reservar_sala">Reservar sala</a></li>
+
+                            </ul>
 
                         </li>
 

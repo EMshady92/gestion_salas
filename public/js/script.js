@@ -36,31 +36,72 @@ function inactivar(id, aux) {
     })
 }
 
+function valida_hora() {
+    var hora_inicio = document.getElementById('hora_inicio').value;
+    var hora_fin = document.getElementById('hora_fin').value;
+
+
+    separador_hora_inicio = hora_inicio.split(":");
+    separador_hora_fin = hora_fin.split(":");
+   var hora_inicio_cadena = separador_hora_inicio[0];
+   var minutos_inicio_cadena = separador_hora_inicio[1];
+
+   var hora_fin_cadena = separador_hora_fin[0];
+   var minutos_fin_cadena = separador_hora_fin[1];
+
+   var hora_inicio_entero = parseInt(hora_inicio_cadena);
+   var hora_fin_entero = parseInt(hora_fin_cadena);
+   var minutos_inicio_entero = parseInt(minutos_inicio_cadena);
+   var minutos_fin_entero = parseInt(minutos_fin_cadena);
+
+   var diferencia = Math.abs(hora_inicio_entero - hora_fin_entero);
+
+     if (diferencia > 2){
+         if(minutos_inicio_entero>minutos_fin_entero){
+            Swal.fire(
+                '¡Atencion!',
+                'No se puede reservar una sala más de 2 horas',
+                'warning'
+            )
+         }else{
+            Swal.fire(
+                '¡Atencion!',
+                'No se puede reservar una sala más de 2 horas',
+                'warning'
+            )
+         }
+
+   }else{
+
+   }
+}
+
 
 //MODAL PARA GUARDAR LOS DATOS DE UN ABOGADO NUEVO EN LA VISTA DE NUEVOS INGRESOS
-function modal_abogado() {
-    var dataString = $('#formulario_abogado').serialize(); // carga todos
+function reservar_sala() {
+    var hora_inicio = document.getElementById('hora_inicio').value;
+    var hora_fin = document.getElementById('hora_fin').value;
+    var id_sala = document.getElementById('id_sala').value;
     $.ajax({
-        type: "POST",
-        method: 'post',
-        url: "/abogadosCrear",
-        data: dataString,
+        type: "GET",
+        method: 'get',
+        url: "/guardar_reserva" +"/"+ hora_inicio +"/"+ hora_fin +"/"+ id_sala,
+
         success: function (data) {
 
-            var x = $('#abogado');
-            option = new Option(data.nombre + " " + data.apellido_paterno + " " + data.apellido_materno, data.id, true, true);
-            x.append(option).trigger('change');
-            x.trigger({
-                type: 'select2:select',
-                params: {
-                    data: data
-                }
-            });
-            $("#modal_abogado .close").click();
-            $('.modal_abogado.in').modal('hide');
-            setTimeout(function () { location.reload() }, 1000);
+            Swal.fire(
+                'Exito!',
+                'Sala: '+data.sala.name +' registrada correctamente',
+                'success'
+            )
+
+
+            $("#modalReservar_sala .close").click();
+            $('.modalReservar_sala.in').modal('hide');
+
 
         }
+
     });
 }
 

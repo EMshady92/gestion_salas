@@ -17,5 +17,7 @@ Route::get('/', function () {
     return view('layout.principal');
 });
 
-//listas
+//salas
 Route::resource('salas', App\Http\Controllers\SalasController::class);
+Route::get('reservar_sala', [App\Http\Controllers\SalasController::class, 'reservar_sala']);
+Route::get('guardar_reserva/{hora_inicio}/{hora_fin}/{id}',[App\Http\Controllers\SalasController::class, 'guardar_reserva']);

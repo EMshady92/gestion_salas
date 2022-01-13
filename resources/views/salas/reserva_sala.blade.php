@@ -36,8 +36,10 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
+                            <th>Hora inicio</th>
+                            <th>Hora fin</th>
+                            <th>Reservar sala</th>
+                            <th>Liberar sala</th>
                             <th>Estado</th>
                             <th>Fecha de registro</th>
                             <th>Ultima actualización</th>
@@ -49,15 +51,17 @@
                         @foreach($salas as $sala)
                         <tr>
                             <td>{{$sala->name}}</td>
+                            <td>{{$sala->hora_inicio}}</td>
+                            <td>{{$sala->hora_fin}}</td>
                             <td> <a  href="{{ route('salas.edit',$sala->id)}}"
                                 class="btn waves-effect waves-light btn-primary" role="button"><i class="mdi mdi-account-edit-outline"></i></a>
                             </td>
 
-                            @if($sala->estado == "ACTIVO")
-                            <td>   <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                            <a class="btn waves-effect waves-light btn-warning" onclick=inactivar('{{$sala->id}}','salas');
-                                     style="margin-right: 10px;" role="button"><i
-                                        class="mdi mdi-delete"></i></a>
+                            @if($sala->estado == "ACTIVO" || $sala->estado == "LIBRE")
+                            <td>
+                            <a class="btn waves-effect waves-light btn-warning" data-toggle="modal" data-target="#modalReservar_sala"
+                            data-dismiss="modal" style="margin-right: 10px;" role="button">
+                            <i class="mdi mdi-delete"></i></a>
                             </td>
                             <td><span class="badge badge-success">{{$sala->estado}}</span></td>
                             @else
@@ -70,6 +74,7 @@
 
 
                         </tr>
+                        @include('salas.modal_reservar_sala')
                         @endforeach
 
                     </tbody>
@@ -80,4 +85,13 @@
     <!-- end row -->
 
 </div> <!-- end container-fluid -->
+<script>
+    window.onload = function() {
+
+    };
+function checha_hora_reserva(){
+
+}
+</script>
+
 @stop

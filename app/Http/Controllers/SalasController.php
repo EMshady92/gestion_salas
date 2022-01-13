@@ -117,4 +117,32 @@ class SalasController extends Controller
           }
 
     }
+
+
+    public function reservar_sala()
+    {
+        $salas = DB::table('salas')
+        ->where('salas.estado','=','ACTIVO') //cuando el estado sala es igual a ACITVO
+        ->OrWhere('salas.estado','=','RESERVADA') //o cuandoi estado sala es igual a RESERVADA
+        ->get(); //traigo los registros de la tabla "salas" en la variable $salas
+
+        return view('salas.reserva_sala', ['salas' => $salas]); //retorno los registros de la tabla "salas" a la vista "reserva_sala" de la carpeta "salas"
+    }
+
+    public function guardar_reserva($hora_inicio,$hora_fin,$id)
+    {
+         $sala=SalasModel::findOrFail($id);
+         $sala->hora_inicio=$hora_inicio;
+         $sala->hora_fin=$hora_fin;
+         $sala->estado="RESERVADA";
+         $sala->update();
+
+         if($sala->update()){
+            return response()->json(['sala'=>$sala]);
+         }else{
+            return false;
+         }
+    }
+
+
 }

@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
 
-                    <input type="text" value={{$sala->id}} id="id_sala" name="id_sala" style="">
+                    <input type="text" value="{{$sala->id}}" id="id_sala" name="id_sala" style="display:none">
 
                     <div class="form-group">
                         <label for="nombre">Nombre<span class="text-danger">*</span></label>
@@ -36,7 +36,7 @@
 
                     <div class="modal-footer">
                         <div class="form-group text-right mb-0">
-                            <a onclick="reservar_sala();" class="btn btn-primary waves-effect waves-light mr-1">
+                            <a onclick="checha_sala({{$sala->id}});" class="btn btn-primary waves-effect waves-light mr-1">
                                 Reservar
                             </a>
                             <button data-dismiss="modal" class="btn btn-secondary waves-effect">

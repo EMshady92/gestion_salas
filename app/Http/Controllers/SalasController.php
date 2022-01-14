@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SalasModel;
 use DB;
+use DateTime;
 use Illuminate\Support\Facades\Redirect;
 class SalasController extends Controller
 {
@@ -40,7 +41,8 @@ class SalasController extends Controller
 
          $sala=new SalasModel;
          $sala->name=$request->get('nombre');
-         $sala->estado="ACTIVO";
+         $sala->estado="LIBRE";
+         $sala->estado_sala="ACTIVO";
          $sala->save();
 
          if($sala->save()){
@@ -87,7 +89,8 @@ class SalasController extends Controller
 
          $lista=SalasModel::findOrFail($id);
          $lista->name=$request->get('nombre');
-         $lista->estado="ACTIVO";
+         $lista->estado="LIBRE";
+         $lista->estado_sala="ACTIVO";
          $lista->update();
 
          if($lista->update()){
@@ -107,7 +110,7 @@ class SalasController extends Controller
     {
 
           $lista=SalasModel::findOrFail($id);
-          $lista->estado="INACTIVO";
+          $lista->estado_sala="INACTIVO";
           $lista->update();
 
           if($lista->update()){
@@ -122,11 +125,25 @@ class SalasController extends Controller
     public function reservar_sala()
     {
         $salas = DB::table('salas')
-        ->where('salas.estado','=','ACTIVO') //cuando el estado sala es igual a ACITVO
-        ->OrWhere('salas.estado','=','RESERVADA') //o cuandoi estado sala es igual a RESERVADA
+        ->where('salas.estado_sala','=','ACTIVO') //cuando el estado sala es igual a ACITVO
         ->get(); //traigo los registros de la tabla "salas" en la variable $salas
 
         return view('salas.reserva_sala', ['salas' => $salas]); //retorno los registros de la tabla "salas" a la vista "reserva_sala" de la carpeta "salas"
+    }
+
+    public function checa_sala($id)
+    {
+        $sala_reg = DB::table('salas')
+        ->where('salas.id','=',$id)
+        ->first();
+
+        if($sala_reg->estado == "RESERVADA"){
+            $sala = 1;
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
+        }else if($sala_reg->estado == "LIBRE"){
+            $sala = 2;
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
+        }
     }
 
     public function guardar_reserva($hora_inicio,$hora_fin,$id)
@@ -142,6 +159,48 @@ class SalasController extends Controller
          }else{
             return false;
          }
+    }
+
+    public function valida_sala($id)
+    {
+        $sala_reg = DB::table('salas')
+        ->where('salas.id','=',$id)
+        ->first();
+
+        if($sala_reg->estado == "RESERVADA"){
+
+            $hora = new DateTime('now');
+            $hora = $hora->format('H:i:s');
+
+            if ($hora < $sala_reg->hora_fin){
+            $sala = 1;
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
+            }else{
+                return response()->json(['hora'=>$hora]);
+            }
+
+        }else if($sala_reg->estado == "LIBRE"){
+            $sala = 2;
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
+        }
+    }
+
+    public function liberar_sala($id)
+    {
+
+            $sala=SalasModel::findOrFail($id);
+            $sala->estado="LIBRE";
+            $sala->hora_inicio="00:00:00";
+            $sala->hora_fin="00:00:00";
+            $sala->update();
+
+            if($sala->update()){
+               return response()->json(['sala'=>$sala]);
+            }else{
+               return false;
+            }
+
+
     }
 
 

@@ -19,6 +19,7 @@ class Salas extends Migration
             $table->time('hora_inicio')->nullable();
             $table->time('hora_fin')->nullable();
             $table->string('estado');
+            $table->string('estado_sala');
             $table->timestamps();
         });
     }

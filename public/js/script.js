@@ -77,7 +77,7 @@ function valida_hora() {
 }
 
 
-//MODAL PARA GUARDAR LOS DATOS DE UN ABOGADO NUEVO EN LA VISTA DE NUEVOS INGRESOS
+
 function reservar_sala() {
     var hora_inicio = document.getElementById('hora_inicio').value;
     var hora_fin = document.getElementById('hora_fin').value;
@@ -98,8 +98,98 @@ function reservar_sala() {
 
             $("#modalReservar_sala .close").click();
             $('.modalReservar_sala.in').modal('hide');
+        setTimeout(function () { location.reload() }, 1000);
 
+        }
 
+    });
+}
+
+function valida_sala(id) {
+    $.ajax({
+        type: "GET",
+        method: 'get',
+        url: "/valida_sala" +"/"+ id,
+
+        success: function (data) {
+            var val = data.sala;
+
+            if(val == 1){
+                Swal.fire({
+                    title: 'La hora final de reserva es '+ data.sala_reg.hora_fin +' ¿Liberar sala?',
+                    text: "",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        liberar_sala_manual(id);
+                    } else {
+                        return false;
+                    }
+                })
+            }else{
+                Swal.fire(
+                    'Atencion!',
+                    'Sala: '+data.sala_reg.name +' esta libre',
+                    'warning'
+                )
+                setTimeout(function () { location.reload() }, 1000);
+            }
+        }
+
+    });
+}
+
+function checha_sala(id) {
+    $.ajax({
+        type: "GET",
+        method: 'get',
+        url: "/checa_sala" +"/"+ id,
+
+        success: function (data) {
+            var val = data.sala;
+
+            if(val == 1){
+                Swal.fire(
+                    'Atencion!',
+                    'Esta sala ya se encuentra reservada',
+                    'warning'
+                )
+            }else{
+                reservar_sala();
+              //  setTimeout(function () { location.reload() }, 1000);
+            }
+        }
+
+    });
+}
+
+function liberar_sala_manual(id) {
+    $.ajax({
+        type: "GET",
+        method: 'get',
+        url: "/liberar_sala" +"/"+ id,
+
+        success: function (data) {
+            var val = data.sala;
+
+            if(val == 1){
+                Swal.fire(
+                    '¡Atención!',
+                    'Esta sala ya se encuentra liberada',
+                    'warning'
+                )
+            }else{
+                Swal.fire(
+                    'Exito!',
+                    'Sala: '+data.sala.name +' liberada correctamente',
+                    'success'
+                )
+                setTimeout(function () { location.reload() }, 1000);
+            }
         }
 
     });

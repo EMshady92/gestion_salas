@@ -41,6 +41,7 @@
                             <th>Reservar sala</th>
                             <th>Liberar sala</th>
                             <th>Estado</th>
+                            <th>Estado sala</th>
                             <th>Fecha de registro</th>
                             <th>Ultima actualización</th>
                         </tr>
@@ -53,19 +54,21 @@
                             <td>{{$sala->name}}</td>
                             <td>{{$sala->hora_inicio}}</td>
                             <td>{{$sala->hora_fin}}</td>
-                            <td> <a  href="{{ route('salas.edit',$sala->id)}}"
-                                class="btn waves-effect waves-light btn-primary" role="button"><i class="mdi mdi-account-edit-outline"></i></a>
+                            <td> <a class="btn waves-effect waves-light btn-success" data-toggle="modal" data-target="#modalReservar_sala"
+                                data-dismiss="modal" style="margin-right: 10px;" role="button">
+                                <i class="mdi mdi-office-building"></i></a>
                             </td>
 
-                            @if($sala->estado == "ACTIVO" || $sala->estado == "LIBRE")
+                            @if($sala->estado_sala == "ACTIVO" || $sala->estado == "LIBRE")
                             <td>
-                            <a class="btn waves-effect waves-light btn-warning" data-toggle="modal" data-target="#modalReservar_sala"
-                            data-dismiss="modal" style="margin-right: 10px;" role="button">
-                            <i class="mdi mdi-delete"></i></a>
+                            <a class="btn waves-effect waves-light btn-warning" style="margin-right: 10px;" role="button">
+                            <i class="mdi mdi-office-building" onclick="valida_sala({{$sala->id}});"></i></a>
                             </td>
-                            <td><span class="badge badge-success">{{$sala->estado}}</span></td>
+                            <td><span>{{$sala->estado}}</span></td>
+                            <td><span class="badge badge-success">{{$sala->estado_sala}}</span></td>
                             @else
                             <td>No aplica</td>
+                            <td><span>{{$sala->estado}}</span></td>
                             <td><span class="badge badge-danger">{{$sala->estado}}</span></td>
                             @endif
 

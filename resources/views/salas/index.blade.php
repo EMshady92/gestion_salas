@@ -44,6 +44,7 @@
                             <th>Editar</th>
                             <th>Eliminar</th>
                             <th>Estado</th>
+                            <th>Estado sala</th>
                             <th>Fecha de registro</th>
                             <th>Ultima actualización</th>
                         </tr>
@@ -58,16 +59,18 @@
                                 class="btn waves-effect waves-light btn-primary" role="button"><i class="mdi mdi-account-edit-outline"></i></a>
                             </td>
 
-                            @if($sala->estado == "ACTIVO")
+                            @if($sala->estado_sala == "ACTIVO")
                             <td>   <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                             <a class="btn waves-effect waves-light btn-warning" onclick=inactivar('{{$sala->id}}','salas');
                                      style="margin-right: 10px;" role="button"><i
                                         class="mdi mdi-delete"></i></a>
                             </td>
-                            <td><span class="badge badge-success">{{$sala->estado}}</span></td>
+                            <td>{{$sala->estado}}</td>
+                            <td><span class="badge badge-success">{{$sala->estado_sala}}</span></td>
                             @else
                             <td>No aplica</td>
-                            <td><span class="badge badge-danger">{{$sala->estado}}</span></td>
+                            <td>{{$sala->estado}}</td>
+                            <td><span class="badge badge-danger">{{$sala->estado_sala}}</span></td>
                             @endif
 
                             <td>{{$sala->created_at}}</td>

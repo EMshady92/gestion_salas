@@ -8,7 +8,7 @@
     <title>Gestion salas</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Sistema Integral de Juicio en Linea" name="Sistema Integral de Juicio en Linea" />
+    <meta content="Gestión salas" name="Gestión salas" />
 
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -122,7 +122,7 @@
 
             </ul>
 
-            <h3 style="color: white;padding-top: 10px;">Sistema Integral de Manejo de Expedientes</h3>
+            <h3 style="color: white;padding-top: 10px;">Gestión salas</h3>
 
 
         </div>

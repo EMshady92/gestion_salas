@@ -18,10 +18,9 @@ Route::get('/', function () {
 });
 
 //salas
-Route::resource('salas', App\Http\Controllers\SalasController::class);
-Route::get('reservar_sala', [App\Http\Controllers\SalasController::class, 'reservar_sala']);
-Route::get('checa_sala/{id}',[App\Http\Controllers\SalasController::class, 'checa_sala']);
-Route::get('guardar_reserva/{hora_inicio}/{hora_fin}/{id}',[App\Http\Controllers\SalasController::class, 'guardar_reserva']);
-Route::get('valida_sala/{id}',[App\Http\Controllers\SalasController::class, 'valida_sala']);
-Route::get('liberar_sala/{id}',[App\Http\Controllers\SalasController::class, 'liberar_sala']);
-Route::get('libera_salas',[App\Http\Controllers\SalasController::class, 'libera_salas']);
+Route::resource('salas', App\Http\Controllers\SalasController::class); //salas ruta resource lo uso para altas, bajas, cambios... CRUD
+Route::get('reservar_sala', [App\Http\Controllers\SalasController::class, 'reservar_sala']); //ruta para reservar una sala
+Route::get('checa_sala/{id}',[App\Http\Controllers\SalasController::class, 'checa_sala']); //ruta para checar si la sala esta reservada
+Route::get('guardar_reserva/{hora_inicio}/{hora_fin}/{id}',[App\Http\Controllers\SalasController::class, 'guardar_reserva']); //ruta guarda reserva
+Route::get('valida_sala/{id}',[App\Http\Controllers\SalasController::class, 'valida_sala']); // ruta de validacion si la hora de la reserva ya paso
+Route::get('liberar_sala/{id}',[App\Http\Controllers\SalasController::class, 'liberar_sala']); //ruta liberar sala manual

@@ -39,16 +39,16 @@ class SalasController extends Controller
     public function store(Request $request)
     {
 
-         $sala=new SalasModel;
-         $sala->name=$request->get('nombre');
-         $sala->estado="LIBRE";
-         $sala->estado_sala="ACTIVO";
-         $sala->save();
+         $sala=new SalasModel; //nuevo modelo
+         $sala->name=$request->get('nombre'); //name toma el valor de "nombre"
+         $sala->estado="LIBRE"; //estado toma el valor de "libre"
+         $sala->estado_sala="ACTIVO"; //estado_sala toma el valor de "activo"
+         $sala->save(); //guarado nuevo registro
 
-         if($sala->save()){
-            return Redirect::to('/salas');
-         }else{
-            return false;
+         if($sala->save()){ //si se guardo con exito
+            return Redirect::to('/salas'); //redirecciona a /salas
+         }else{ //de lo contrario
+            return false; //retona falso
          }
 
 
@@ -73,8 +73,8 @@ class SalasController extends Controller
      */
     public function edit($id)
     {
-        $sala=SalasModel::findOrFail($id);
-        return view("salas.edit",["sala"=>$sala]);
+        $sala=SalasModel::findOrFail($id); //busco en el modelo el registro con el id correspondiente
+        return view("salas.edit",["sala"=>$sala]); //mando $salas a la vista salas.edit
     }
 
     /**
@@ -87,16 +87,16 @@ class SalasController extends Controller
     public function update(Request $request, $id)
     {
 
-         $lista=SalasModel::findOrFail($id);
-         $lista->name=$request->get('nombre');
-         $lista->estado="LIBRE";
-         $lista->estado_sala="ACTIVO";
-         $lista->update();
+         $sala=SalasModel::findOrFail($id); //busco en el modelo el registro con el id correspondiente
+         $sala->name=$request->get('nombre'); //name toma el valor de "nombre"
+         $sala->estado="LIBRE";   //estado toma el valor de "libre"
+         $sala->estado_sala="ACTIVO"; //estado_sala toma el valor de "activo"
+         $sala->update(); //actualizo registro
 
-         if($lista->update()){
-             return Redirect::to('/salas');
-         }else{
-            return false;
+         if($sala->update()){ //si se actualizo
+             return Redirect::to('/salas'); //redirecciono a /salas
+         }else{ //de lo contrario
+            return false; //retono false
          }
     }
 
@@ -109,14 +109,14 @@ class SalasController extends Controller
     public function destroy($id)
     {
 
-          $lista=SalasModel::findOrFail($id);
-          $lista->estado_sala="INACTIVO";
-          $lista->update();
+          $lista=SalasModel::findOrFail($id); //busco en el modelo el registro con el id correspondiente
+          $lista->estado_sala="INACTIVO"; //estado_sala toma el valor de "INACTIVO"
+          $lista->update(); //actualizo registro
 
-          if($lista->update()){
-            return $lista;
-          }else{
-           return false;
+          if($lista->update()){  //si se actualizo
+            return $lista; //retorno a el registro actualizado
+          }else{  //de lo contrario
+           return false; //retono false
           }
 
     }
@@ -135,29 +135,29 @@ class SalasController extends Controller
     {
         $sala_reg = DB::table('salas')
         ->where('salas.id','=',$id)
-        ->first();
+        ->first(); //traigo el registro de la db de datos correspondiene al id que recibo y lo guardo en la variable  $sala_reg
 
-        if($sala_reg->estado == "RESERVADA"){
-            $sala = 1;
-            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
-        }else if($sala_reg->estado == "LIBRE"){
-            $sala = 2;
-            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
+        if($sala_reg->estado == "RESERVADA"){ // si el estado de el registro encontrado en $sala_reg es igual a RESERVADA
+            $sala = 1; //$sala es igual a 1
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]); //lo convierto en json y retorno $sala_reg y $sala
+        }else if($sala_reg->estado == "LIBRE"){ //si el estado es igual a LIBRE
+            $sala = 2; //$sala es igual a 2
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]); //lo convierto en json y retorno $sala_reg y $sala
         }
     }
 
     public function guardar_reserva($hora_inicio,$hora_fin,$id)
     {
-         $sala=SalasModel::findOrFail($id);
-         $sala->hora_inicio=$hora_inicio;
-         $sala->hora_fin=$hora_fin;
-         $sala->estado="RESERVADA";
-         $sala->update();
+         $sala=SalasModel::findOrFail($id);  //busco en el modelo el registro con el id correspondiente
+         $sala->hora_inicio=$hora_inicio; //hora_inicio toma el valor de "$hora_inicio"
+         $sala->hora_fin=$hora_fin;//hora_fin toma el valor de "$hora_fin"
+         $sala->estado="RESERVADA";//estado toma el valor de "RESERVADA"
+         $sala->update(); //actualizo registro
 
-         if($sala->update()){
-            return response()->json(['sala'=>$sala]);
-         }else{
-            return false;
+         if($sala->update()){ //si se actualizo con exito
+            return response()->json(['sala'=>$sala]); //retono el registro actualizado en formato json
+         }else{  //de lo contrario
+            return false; //retorno false
          }
     }
 
@@ -165,76 +165,42 @@ class SalasController extends Controller
     {
         $sala_reg = DB::table('salas')
         ->where('salas.id','=',$id)
-        ->first();
+        ->first(); //traigo el registro de la db de datos correspondiene al id que recibo y lo guardo en la variable  $sala_reg
 
-        if($sala_reg->estado == "RESERVADA"){
+        if($sala_reg->estado == "RESERVADA"){ //si $sala_reg->estado es igual a RESERVADA
 
-            $hora = new DateTime('now');
-            $hora = $hora->format('H:i:s');
+            $hora = new DateTime('now'); //obtengo fecha y hora actual
+            $hora = $hora->format('H:i:s'); //le doy formato de hora
 
-            if ($hora <= $sala_reg->hora_fin){
-            $sala = 1;
-            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
-            }else{
-                $sala = 3;
-                return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
+            if ($hora <= $sala_reg->hora_fin){ //si la hora es menor o igual a $sala_reg->hora_fin
+            $sala = 1; //$sala es igual a 1
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]); //convierto $sala y $sala_reg a json y lo retorno
+            }else{ //de lo contrario
+                $sala = 3; //$sala es igual a 3
+                return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]); //convierto $sala y $sala_reg a json y lo retorno
             }
 
-        }else if($sala_reg->estado == "LIBRE"){
-            $sala = 2;
-            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
+        }else if($sala_reg->estado == "LIBRE"){ //si $sala_reg->estado es igual a LIBRE
+            $sala = 2; //$sala es igual a 2
+            return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]); //convierto $sala y $sala_reg a json y lo retorno
         }
     }
 
     public function liberar_sala($id)
     {
 
-            $sala=SalasModel::findOrFail($id);
-            $sala->estado="LIBRE";
-            $sala->hora_inicio="00:00:00";
-            $sala->hora_fin="00:00:00";
-            $sala->update();
+            $sala=SalasModel::findOrFail($id);  //busco en el modelo el registro con el id correspondiente
+            $sala->estado="LIBRE"; //estado es igual a LIBRE
+            $sala->hora_inicio="00:00:00"; //hora_inicio toma el valor 00:00:00 formato de hora en ceros
+            $sala->hora_fin="00:00:00"; //hora_fin toma el valor 00:00:00 formato de hora en ceros
+            $sala->update(); //actualizo registro
 
-            if($sala->update()){
-               return response()->json(['sala'=>$sala]);
-            }else{
-               return false;
+            if($sala->update()){ //si se actualizo el registro
+               return response()->json(['sala'=>$sala]); //retorno el registro en formato json
+            }else{ //de lo contrario
+               return false; //retono false
             }
 
 
     }
-
-    public function libera_salas()
-    {
-            $salas = DB::table('salas')
-            ->where('salas.estado','=','RESERVADA')
-            ->get();
-            $hora = new DateTime('now');
-            $hora = $hora->format('H:i:s');
-            foreach($salas as $sala){
-               if($sala->hora_fin >= $hora){
-                $sala=SalasModel::findOrFail($sala->id);
-                $sala->estado="LIBRE";
-                $sala->hora_inicio="00:00:00";
-                $sala->hora_fin="00:00:00";
-                $sala->update();
-
-               /*  if($sala->update()){
-                   return response()->json(['sala'=>$sala]);
-                }else{
-                   return false;
-                } */
-
-               }
-
-
-            }
-
-
-
-
-
-    }
-
-
 }

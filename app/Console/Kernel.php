@@ -20,30 +20,26 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('sala:free')->everyMinute();
-         $schedule->call(function(){
 
-            $salas = DB::table('salas')
+         $schedule->call(function(){ // callback para actualizar sala automaticamente cada minuto
+
+            $salas = DB::table('salas') //guardo en la variable $salas los registros de la tabla 'salas' en estado RESERVADA
             ->where('salas.estado','=','RESERVADA')
             ->get();
-            $hora = new DateTime();
-            $hora = $hora->format('H:i:s');
-            foreach($salas as $sala){
-               if($sala->hora_fin == $hora){
-                $sala=SalasModel::findOrFail($sala->id);
-                $sala->estado="LIBRE";
-                $sala->hora_inicio="00:00:00";
-                $sala->hora_fin="00:00:00";
-                $sala->update();
+            $hora = new DateTime(); //obtengo fecha y hora
+            $hora = $hora->format('H:i:s'); //formateo fecha en formato hora
+            foreach($salas as $sala){ //foreach para actualizar salas con hora_Fin cumplida
+               if($sala->hora_fin == $hora){ //si hora fin es igual o mayor a hora actual
+                $sala=SalasModel::findOrFail($sala->id); //obtengo el registro por medio del modelo y el id
+                $sala->estado="LIBRE"; //estado igual a LIBRE
+                $sala->hora_inicio="00:00:00"; //hora inicio en ceros
+                $sala->hora_fin="00:00:00"; //hora final en ceros
+                $sala->update(); //actualizo registro
                }
 
 
             }
-
-
-
-
-         })->everyMinute();
+         })->everyMinute(); //cada minuto
     }
 
     /**

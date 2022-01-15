@@ -24,3 +24,4 @@ Route::get('checa_sala/{id}',[App\Http\Controllers\SalasController::class, 'chec
 Route::get('guardar_reserva/{hora_inicio}/{hora_fin}/{id}',[App\Http\Controllers\SalasController::class, 'guardar_reserva']);
 Route::get('valida_sala/{id}',[App\Http\Controllers\SalasController::class, 'valida_sala']);
 Route::get('liberar_sala/{id}',[App\Http\Controllers\SalasController::class, 'liberar_sala']);
+Route::get('libera_salas',[App\Http\Controllers\SalasController::class, 'libera_salas']);

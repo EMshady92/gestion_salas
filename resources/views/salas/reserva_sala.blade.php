@@ -54,7 +54,7 @@
                             <td>{{$sala->name}}</td>
                             <td>{{$sala->hora_inicio}}</td>
                             <td>{{$sala->hora_fin}}</td>
-                            <td> <a class="btn waves-effect waves-light btn-success" data-toggle="modal" data-target="#modalReservar_sala"
+                            <td> <a class="btn waves-effect waves-light btn-success" data-toggle="modal" data-target="#modalReservar_sala_{{$sala->id}}"
                                 data-dismiss="modal" style="margin-right: 10px;" role="button">
                                 <i class="mdi mdi-office-building"></i></a>
                             </td>
@@ -90,10 +90,19 @@
 </div> <!-- end container-fluid -->
 <script>
     window.onload = function() {
-
+      /*   setInterval(libera_salas(), 1000); */
+}
     };
-function checha_hora_reserva(){
+function libera_salas(){
+    $.ajax({
+        type: "GET",
+        method: 'get',
+        url: "/libera_salas",
 
+        success: function (data) {
+        }
+
+    });
 }
 </script>
 

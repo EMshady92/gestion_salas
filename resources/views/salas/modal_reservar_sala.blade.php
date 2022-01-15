@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalReservar_sala" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modalReservar_sala_{{$sala->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -23,14 +23,14 @@
                     <div class="form-group">
                         <label for="hora_inicio">Hora inicio<span class="text-danger">*</span></label>
                         <input type="time" name="hora_inicio"  parsley-trigger="change"
-                            placeholder="Ingresar el email" class="form-control" id="hora_inicio">
+                            placeholder="Ingresar el email" class="form-control" id="hora_inicio_{{$sala->id}}">
 
                     </div>
 
                     <div class="form-group">
                         <label for="hora_fin">Hora fin<span class="text-danger">*</span></label>
-                        <input type="time" name="hora_fin" onchange="valida_hora()" parsley-trigger="change"
-                            placeholder="Ingresar el email" class="form-control" id="hora_fin">
+                        <input type="time" name="hora_fin" onchange="valida_hora({{$sala->id}})" parsley-trigger="change"
+                            placeholder="Ingresar el email" class="form-control" id="hora_fin_{{$sala->id}}">
 
                     </div>
 

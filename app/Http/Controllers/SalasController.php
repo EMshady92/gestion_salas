@@ -172,11 +172,12 @@ class SalasController extends Controller
             $hora = new DateTime('now');
             $hora = $hora->format('H:i:s');
 
-            if ($hora < $sala_reg->hora_fin){
+            if ($hora <= $sala_reg->hora_fin){
             $sala = 1;
             return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
             }else{
-                return response()->json(['hora'=>$hora]);
+                $sala = 3;
+                return response()->json(['sala'=>$sala,'sala_reg'=>$sala_reg]);
             }
 
         }else if($sala_reg->estado == "LIBRE"){
@@ -199,6 +200,38 @@ class SalasController extends Controller
             }else{
                return false;
             }
+
+
+    }
+
+    public function libera_salas()
+    {
+            $salas = DB::table('salas')
+            ->where('salas.estado','=','RESERVADA')
+            ->get();
+            $hora = new DateTime('now');
+            $hora = $hora->format('H:i:s');
+            foreach($salas as $sala){
+               if($sala->hora_fin >= $hora){
+                $sala=SalasModel::findOrFail($sala->id);
+                $sala->estado="LIBRE";
+                $sala->hora_inicio="00:00:00";
+                $sala->hora_fin="00:00:00";
+                $sala->update();
+
+               /*  if($sala->update()){
+                   return response()->json(['sala'=>$sala]);
+                }else{
+                   return false;
+                } */
+
+               }
+
+
+            }
+
+
+
 
 
     }
